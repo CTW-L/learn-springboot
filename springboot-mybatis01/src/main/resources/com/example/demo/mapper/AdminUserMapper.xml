@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.AdminUser">
+    <id column="user_id" jdbcType="SMALLINT" property="userId" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="passwd" jdbcType="CHAR" property="passwd" />
+    <result column="passwd_salt" jdbcType="CHAR" property="passwdSalt" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="role" jdbcType="TINYINT" property="role" />
+    <result column="user_status" jdbcType="TINYINT" property="userStatus" />
+    <result column="create_by" jdbcType="SMALLINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="SMALLINT" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, account_name, real_name, passwd, passwd_salt, mobile, role, user_status, 
+    create_by, create_time, update_by, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.model.AdminUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_user
+    where user_id = #{userId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from admin_user
+    where user_id = #{userId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.model.AdminUserExample">
+    delete from admin_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.AdminUser">
+    insert into admin_user (user_id, account_name, real_name, 
+      passwd, passwd_salt, mobile, 
+      role, user_status, create_by, 
+      create_time, update_by, update_time
+      )
+    values (#{userId,jdbcType=SMALLINT}, #{accountName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{passwd,jdbcType=CHAR}, #{passwdSalt,jdbcType=CHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{role,jdbcType=TINYINT}, #{userStatus,jdbcType=TINYINT}, #{createBy,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=SMALLINT}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.AdminUser">
+    insert into admin_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="passwdSalt != null">
+        passwd_salt,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=SMALLINT},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=CHAR},
+      </if>
+      <if test="passwdSalt != null">
+        #{passwdSalt,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=SMALLINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.model.AdminUserExample" resultType="java.lang.Integer">
+    select count(*) from admin_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update admin_user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.accountName != null">
+        account_name = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null">
+        real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=CHAR},
+      </if>
+      <if test="record.passwdSalt != null">
+        passwd_salt = #{record.passwdSalt,jdbcType=CHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.role != null">
+        role = #{record.role,jdbcType=TINYINT},
+      </if>
+      <if test="record.userStatus != null">
+        user_status = #{record.userStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=SMALLINT},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update admin_user
+    set user_id = #{record.userId,jdbcType=SMALLINT},
+      account_name = #{record.accountName,jdbcType=VARCHAR},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=CHAR},
+      passwd_salt = #{record.passwdSalt,jdbcType=CHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=TINYINT},
+      user_status = #{record.userStatus,jdbcType=TINYINT},
+      create_by = #{record.createBy,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=SMALLINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.AdminUser">
+    update admin_user
+    <set>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=CHAR},
+      </if>
+      <if test="passwdSalt != null">
+        passwd_salt = #{passwdSalt,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=SMALLINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.AdminUser">
+    update admin_user
+    set account_name = #{accountName,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=CHAR},
+      passwd_salt = #{passwdSalt,jdbcType=CHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      role = #{role,jdbcType=TINYINT},
+      user_status = #{userStatus,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=SMALLINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=SMALLINT}
+  </update>
+</mapper>
